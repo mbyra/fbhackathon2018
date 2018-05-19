@@ -3,68 +3,57 @@
 {% load static %}
 
 <html lang="en">
-
 <head>
-
+    <title>Bootstrap Example</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Logo Nav - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LiveLecture</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if request.user.is_authenticated %}
+                        <li><a href="#"><span
+                                class="glyphicon glyphicon-user"></span> {{ request.user.first_name }} {{ request.user.last_name }}
+                            (Profile)</a></li>
+                        <li><a href=#><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+                    {% else %}
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
         </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
     </div>
-</nav>
-
-<!-- Page Content -->
-<div class="container">
-    <h1 class="mt-5">Logo Nav by Start Bootstrap</h1>
-    <p>The logo in the navbar is now a default Bootstrap feature in Bootstrap 4! Make sure to set the width and height
-        of the logo within the HTML. For best results, it's recommended that you use an SVG image as your logo.</p>
-</div>
-<!-- /.container -->
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</main>
 
 </body>
-
 </html>

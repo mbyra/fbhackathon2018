@@ -1,0 +1,54 @@
+{% extends 'LiveLecture/base.html' %}
+
+{% block content %}
+
+    <h2 class="mt-5">Upcoming lectures</h2>
+    {% if request.user.is_authenticated %}
+
+        <div class="text-black">
+            {{ request.user.first_name }}, choose one of your lectures from the list below.
+        </div>
+        <div>
+            <a class="btn btn-secondary" href=#>Find new lecture</a>
+        </div>
+
+    {% else %}
+
+        <span class="text-black">
+                Sign in to join lectures.
+            </span>
+
+    {% endif %}
+
+    {% if lecture_list %}
+        <table class="table table-hover">
+            <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Lecturer</th>
+            <th scope="col">Description</th>
+            </thead>
+            <tbody>
+            {% for lecture in lecture_list %}
+                {#                <tr class='clickable-row' data-href="{% url 'airport:flight_details' flight.pk %}">#}
+                <tr class='clickable-row'>
+                    <td>{{ lecture.name }}</td>
+                    <td>{{ lecture.lecturer.first_name }} {{ lecture.lecturer.last_name }}</td>
+                    <td>{{ lecture.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>No lectures are available.</p>
+    {% endif %}
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+
+{% endblock %}
