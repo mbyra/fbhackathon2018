@@ -35,11 +35,11 @@
                         <li><a href="#"><span
                                 class="glyphicon glyphicon-user"></span> {{ request.user.first_name }} {{ request.user.last_name }}
                             (Profile)</a></li>
-                        <li><a href=#><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href="{% url 'LiveLecture:logout_view' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 
                     {% else %}
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="{% url 'LiveLecture:login_view' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     {% endif %}
 
                 </ul>
