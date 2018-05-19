@@ -39,6 +39,7 @@ def login_or_register(request):
         login_failure = True
         context = {'login_failure': login_failure}
         return render(request, 'LiveLecture/upcoming.html', context)
+
 def lecture(request):
     template = loader.get_template('LiveLecture/lecture.html')
     context = {}
