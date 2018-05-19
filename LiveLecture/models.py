@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.contrib.auth.models import AbstractUser
 
 
@@ -18,6 +18,8 @@ class Lecture(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=500)
     max_students = models.IntegerField()
+    startTime = models.DateTimeField(default=datetime.now())
+    endTime = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return 'Lecture: %s' % self.name
@@ -28,5 +30,12 @@ class Subscription(models.Model):
 
     def __str__(self):
         return 'Substription of %s to lecture: %s' % (self.student, self.lecture)
+
+
+class Messages(models.Model):
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=1000)
+    likes = models.IntegerField()
 
 
