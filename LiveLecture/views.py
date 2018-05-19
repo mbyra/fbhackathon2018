@@ -1,6 +1,6 @@
 from django.views.decorators.http import require_POST
 
-from .models import User, Lecture
+from .models import User, Lecture, Subscription, Messages
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404
@@ -40,7 +40,16 @@ def login_or_register(request):
         context = {'login_failure': login_failure}
         return render(request, 'LiveLecture/upcoming.html', context)
 
-def lecture(request):
+def lecture(request, pk):
     template = loader.get_template('LiveLecture/lecture.html')
-    context = {}
+    lecture = Lecture.objects.filter(pk=pk)[0]
+    if lecture is None:
+        raise ValueError("There is no lecture with this pk!")
+
+    substriptions = Subscription.objects.filter(lecture=lecture)
+    students = []
+    for substription in substriptions:
+        students.append(substription.student)
+
+    context = {'lecture' : lecture, 'students' : students}
     return render(request, 'LiveLecture/lecture.html', context)
