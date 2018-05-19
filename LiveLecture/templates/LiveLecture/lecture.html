@@ -6,7 +6,7 @@
     {% if request.user.is_authenticated %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-14">
                 <div class="page-header">
                   <h1>Horizontal timeline</h1>
                 </div>
@@ -86,6 +86,16 @@
                     </li> -->
                 </ul>
             </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    <div class='zoom'>
+        <div class="form-row text-center margin" >
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Add comment or question to the lecture</button>
             </div>
         </div>
     </div>
