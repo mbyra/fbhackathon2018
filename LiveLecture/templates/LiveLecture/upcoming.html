@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             {% for lecture in lecture_list %}
-                {#                <tr class='clickable-row' data-href="{% url 'airport:flight_details' flight.pk %}">#}
+                {#                <tr class='clickable-row' data-href="{% url 'LiveLecture:lecture' %}">#}
                 <tr class='clickable-row'>
                     <td>{{ lecture.name }}</td>
                     <td>{{ lecture.lecturer.first_name }} {{ lecture.lecturer.last_name }}</td>
