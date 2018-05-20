@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
 {% load static %}
-<link rel ="stylesheet" type="text/css" href="{% static 'LiveLecture/style.css' %}">
-<link rel ="stylesheet" type="text/css" href="{% static 'LiveLecture/timeline.css' %}">
 
 <html lang="en">
 <head>
@@ -12,39 +10,124 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'LiveLecture/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LiveLecture/timeline.css' %}">
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
+    <script>$(document).ready(function () {
+        $('body').bootstrapMaterialDesign();
+    });</script>
+
 </head>
 <body>
 
 <header>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'LiveLecture:index' %}">LiveLecture</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="{% url 'LiveLecture:index' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                    <li><a href="{% url 'LiveLecture:index' 1 %}"><span class="glyphicon glyphicon-book"></span> Courses</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if request.user.is_authenticated %}
-                        <li><a href="#"><span
+    {#    <nav class="navbar navbar-inverse navbar-expand-lg navbar-light bg-light">#}
+    {#        <div class="container-fluid">#}
+    {#            <div class="navbar-header">#}
+    {#                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">#}
+    {#                    <span class="icon-bar"></span>#}
+    {#                    <span class="icon-bar"></span>#}
+    {#                    <span class="icon-bar"></span>#}
+    {#                </button>#}
+    {#                <a class="navbar-brand" href="{% url 'LiveLecture:index' %}">LiveLecture</a>#}
+    {#            </div>#}
+    {#            <div class="collapse navbar-collapse" id="myNavbar">#}
+    {#                <ul class="nav navbar-nav">#}
+    {#                    <li><a href="{% url 'LiveLecture:index' %}"><span class="glyphicon glyphicon-home"></span> Home</a>#}
+    {#                    </li>#}
+    {#                    <li><a href="{% url 'LiveLecture:index' 1 %}"><span class="glyphicon glyphicon-book"></span> Courses</a>#}
+    {#                    </li>#}
+    {#                </ul>#}
+    {#                <ul class="nav navbar-nav navbar-right">#}
+    {#                    {% if request.user.is_authenticated %}#}
+    {#                        <li><a href="#"><span#}
+    {#                                class="glyphicon glyphicon-user"></span> {{ request.user.first_name }} {{ request.user.last_name }}#}
+    {#                            (Profile)</a></li>#}
+    {#                        <li><a href="{% url 'LiveLecture:logout_view' %}"><span#}
+    {#                                class="glyphicon glyphicon-log-out"></span> Logout</a></li>#}
+    {##}
+    {#                    {% else %}#}
+    {#                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>#}
+    {#                        <li><a href="{% url 'LiveLecture:login_view' %}"><span#}
+    {#                                class="glyphicon glyphicon-log-in"></span> Login</a></li>#}
+    {#                    {% endif %}#}
+    {##}
+    {#                </ul>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </nav>#}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="font-size: 2em">LiveLecture</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'LiveLecture:index' %}" style="font-size: 1.5em"><span
+                            class="glyphicon glyphicon-home"></span> Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'LiveLecture:index' 1 %}" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1.5em"><span
+                            class="glyphicon glyphicon-book" ></span> Courses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'LiveLecture:index' 1 %}" style="font-size: 1.5em">All
+                            courses</a>
+                        <a class="dropdown-item" href="{% url 'LiveLecture:index' %}" style="font-size: 1.5em">Your
+                            courses</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" style="font-size: 1.5em">Search</a>
+                    </div>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="font-size: 1.5em"><span
                                 class="glyphicon glyphicon-user"></span> {{ request.user.first_name }} {{ request.user.last_name }}
-                            (Profile)</a></li>
-                        <li><a href="{% url 'LiveLecture:logout_view' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            (Profile)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LiveLecture:logout_view' %}" style="font-size: 1.5em"><span
+                                class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </li>
 
-                    {% else %}
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="{% url 'LiveLecture:login_view' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    {% endif %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span
+                                class="glyphicon glyphicon-user"></span> Sign Up
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LiveLecture:login_view' %}"><span
+                                class="glyphicon glyphicon-log-in"></span> Login
+                        </a>
+                    </li>
 
-                </ul>
-            </div>
+                {% endif %}
+
+            </ul>
         </div>
     </nav>
 </header>

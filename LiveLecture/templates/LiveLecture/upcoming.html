@@ -2,15 +2,15 @@
 
 {% block content %}
 
-    <h2 class="mt-5">Upcoming lectures</h2>
     {% if request.user.is_authenticated %}
+        <h2 class="mt-5">Your lectures</h2>
 
         <div class="text-black">
             {{ request.user.first_name }}, choose one of your lectures from the list below.
         </div>
 
     {% else %}
-
+        <h2 class="mt-5">Upcoming lectures</h2>
         <span class="text-black">
                 Sign in to join lectures.
             </span>
