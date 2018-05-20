@@ -10,10 +10,21 @@ from django.template import loader
 from django.urls import reverse
 from datetime import datetime, timedelta
 
-def index(request):
+def index(request,listAll=False):
     template = loader.get_template('LiveLecture/upcoming.html')
-    lecture_list = Lecture.objects.all()
-    context = {'lecture_list' : lecture_list}
+    if not request.user.is_anonymous:
+        print(type(request.user))
+        lecture_list =get_user_courses(request.user)
+    else:
+        lecture_list=None
+    signInDisable=False
+    if lecture_list is None:
+        lecture_list = Lecture.objects.all()
+    elif listAll:
+        lecture_list=get_user_courses(request.user,True)
+    else:
+        signInDisable=True
+    context = {'lecture_list' : lecture_list,'signInEnable' : signInDisable}
     return render(request, 'LiveLecture/upcoming.html', context)
 
 def logout_view(request):
@@ -33,11 +44,7 @@ def login_or_register(request):
         print("uzytkownik istnieje")
         login(request, user)
         login_success = True
-        subscription_list = Subscription.objects.filter(student=user)
-        lecture_list=[]
-        for subscription in subscription_list:
-            lecture_list.append(subscription.lecture)
-        
+        lecture_list = get_user_courses(user)
         context = {'login_success': login_success,'lecture_list': lecture_list}
         return render(request, 'LiveLecture/upcoming.html', context)
     else:
@@ -110,3 +117,17 @@ def modify_timeline(request):
     context = {'lecture': lecture, 'students': students, 'messages' : messages}
 
     return render(request, 'LiveLecture/lecture.html', context)
+def add_subscriptions(request,lecture):
+    Subscription.objects.create(lecture=Lecture.objects.get(pk=lecture),student=request.user)
+    print("hello")
+    index(request,False)
+
+def get_user_courses(user,invert=False):
+    subscription_list = Subscription.objects.filter(student=user)
+    lecture_list=[]
+    for subscription in subscription_list:
+        lecture_list.append(subscription.lecture)
+    if invert:
+        lecture_list=[x for x in Lecture.objects.all() if x not in lecture_list]
+
+    return lecture_list

@@ -8,9 +8,6 @@
         <div class="text-black">
             {{ request.user.first_name }}, choose one of your lectures from the list below.
         </div>
-        <div>
-            <a class="btn btn-secondary" href=#>Find new lecture</a>
-        </div>
 
     {% else %}
 
@@ -33,7 +30,11 @@
                     <td>{{ lecture.name }}</td>
                     <td>{{ lecture.lecturer.first_name }} {{ lecture.lecturer.last_name }}</td>
                     <td>{{ lecture.description }}</td>
+                    {% if not signInEnable %}
+                    <td><button type="button" class="btn" href="{% url 'LiveLecture:add_subscriptions' lecture.pk %}">Sign in</button></td>
+                    {% endif %}
                 </tr>
+               
             {% endfor %}
             </tbody>
         </table>
