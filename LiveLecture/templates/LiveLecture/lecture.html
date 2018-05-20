@@ -114,11 +114,23 @@
         </div>
 
         <ul class="list-group">
-            {% for message in messages%}
-                <li class="list-group-item">{{ message.student.first_name }} {{ message.student.last_name }} : {{ message.content }}</li>
+            {% for message in messages %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm">
+                            <b>{{ message.student.first_name }} {{ message.student.last_name }}</b>
+                        </div>
+                        <div class="col-sm">
+                            Likes: {{ message.likes }}
+                        </div>
+                        <div class="col-sm">
+                            <a href="{% url 'LiveLecture:add_like' lecture.pk message.pk%}" class="btn btn-primary" role="button">Like</a>
+                        </div>
+                    </div>
+                    {{ message.content }}
+                </li>
             {% endfor %}
         </ul>
-
 
         <form action="{% url 'LiveLecture:add_message' lecture.pk %}" method="POST">
             {% csrf_token %}

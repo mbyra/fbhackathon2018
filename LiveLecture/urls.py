@@ -10,5 +10,6 @@ urlpatterns = [
     path('login_or_register/', views.login_or_register, name='login_or_register'),
     path('lecture/<int:pk>',views.lecture, name='lecture'),
     path('add_message/<int:pk>', views.add_message, name='add_message'),
+    path('add_like/<int:lecture_pk>/<int:message_pk>', views.add_like, name='add_like'),
 
 ]
