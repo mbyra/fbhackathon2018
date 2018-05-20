@@ -57,7 +57,9 @@ def lecture(request, pk):
     for substription in substriptions:
         students.append(substription.student)
 
-    context = {'lecture' : lecture, 'students' : students}
+    messages = Messages.objects.filter(lecture=lecture).order_by('-likes')
+
+    context = {'lecture': lecture, 'students': students, 'messages' : messages}
     return render(request, 'LiveLecture/lecture.html', context)
 
 
@@ -79,8 +81,26 @@ def add_message(request, pk):
 
     Messages.objects.create(lecture=lecture, student=request.user, content=request.POST['message'], likes=0)
 
-    messages = Messages.objects.filter(lecture=lecture)
+    messages = Messages.objects.filter(lecture=lecture).order_by('-likes')
 
     context = {'lecture': lecture, 'students': students, 'messages' : messages}
 
     return render(request, 'LiveLecture/lecture.html', context)
+
+def add_like(request, lecture_pk, message_pk):
+    message = Messages.objects.get(pk=message_pk)
+    message.likes += 1
+    message.save()
+    lecture = Lecture.objects.filter(pk=lecture_pk)[0]
+
+    substriptions = Subscription.objects.filter(lecture=lecture)
+    students = []
+    for substription in substriptions:
+        students.append(substription.student)
+
+    messages = Messages.objects.filter(lecture=lecture).order_by('-likes')
+
+    context = {'lecture': lecture, 'students': students, 'messages' : messages}
+
+    return render(request, 'LiveLecture/lecture.html', context)
+
