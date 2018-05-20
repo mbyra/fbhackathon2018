@@ -1,6 +1,6 @@
 from django.views.decorators.http import require_POST
 
-from .models import User, Lecture
+from .models import User, Lecture, Subscription
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404
@@ -32,7 +32,12 @@ def login_or_register(request):
         print("uzytkownik istnieje")
         login(request, user)
         login_success = True
-        context = {'login_success': login_success}
+        subscription_list = Subscription.objects.filter(student=user)
+        lecture_list=[]
+        for subscription in subscription_list:
+            lecture_list.append(subscription.lecture)
+        
+        context = {'login_success': login_success,'lecture_list': lecture_list}
         return render(request, 'LiveLecture/upcoming.html', context)
     else:
         print("uzytkownik nie istnieje")

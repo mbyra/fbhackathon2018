@@ -11,6 +11,14 @@
         <div>
             <a class="btn btn-secondary" href=#>Find new lecture</a>
         </div>
+
+    {% else %}
+
+        <span class="text-black">
+                Sign in to join lectures.
+            </span>
+
+    {% endif %}
     
     {% if lecture_list %}
         <table class="table table-hover">
@@ -33,15 +41,6 @@
     {% else %}
         <p>No lectures are available.</p>
     {% endif %}
-
-    {% else %}
-
-        <span class="text-black">
-                Sign in to join lectures.
-            </span>
-
-    {% endif %}
-
 
     <script>
         jQuery(document).ready(function ($) {
