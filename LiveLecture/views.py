@@ -104,3 +104,9 @@ def add_like(request, lecture_pk, message_pk):
 
     return render(request, 'LiveLecture/lecture.html', context)
 
+def modify_timeline(request):
+    messages = Messages.objects.filter(lecture=lecture).order_by('-likes')
+
+    context = {'lecture': lecture, 'students': students, 'messages' : messages}
+
+    return render(request, 'LiveLecture/lecture.html', context)
